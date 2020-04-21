@@ -136,6 +136,7 @@ type ProfileSection struct {
 	DurationSeconds uint   `ini:"duration_seconds,omitempty"`
 	SourceProfile   string `ini:"source_profile,omitempty"`
 	ParentProfile   string `ini:"parent_profile,omitempty"`
+	IncludeProfile  string `ini:"include_profile,omitempty"`
 	SSOStartURL     string `ini:"sso_start_url,omitempty"`
 	SSORegion       string `ini:"sso_region,omitempty"`
 	SSOAccountID    string `ini:"sso_account_id,omitempty"`
@@ -313,7 +314,13 @@ func (cl *ConfigLoader) populateFromConfigFile(config *Config, profileName strin
 		config.SSORoleName = psection.SSORoleName
 	}
 
-	if psection.ParentProfile != "" {
+	if psection.IncludeProfile != "" {
+		err := cl.populateFromConfigFile(config, psection.IncludeProfile)
+		if err != nil {
+			return err
+		}
+	} else if psection.ParentProfile != "" {
+		fmt.Fprint(os.Stderr, "Warning: parent_profile is deprecated, please use include_profile instead in your AWS config")
 		err := cl.populateFromConfigFile(config, psection.ParentProfile)
 		if err != nil {
 			return err

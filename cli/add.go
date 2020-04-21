@@ -53,6 +53,10 @@ func AddCommand(app *kingpin.Application, input AddCommandInput) {
 		app.Fatalf("Your profile has a include_profile of %s, adding credentials to %s won't have any effect",
 			p.IncludeProfile, input.ProfileName)
 		return
+	} else if p.ParentProfile != "" {
+		app.Fatalf("Your profile has a parent_profile of %s, adding credentials to %s won't have any effect",
+			p.IncludeProfile, input.ProfileName)
+		return
 	}
 
 	if input.FromEnv {

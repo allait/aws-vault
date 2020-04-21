@@ -135,7 +135,7 @@ type ProfileSection struct {
 	RoleSessionName string `ini:"role_session_name,omitempty"`
 	DurationSeconds uint   `ini:"duration_seconds,omitempty"`
 	SourceProfile   string `ini:"source_profile,omitempty"`
-	ParentProfile   string `ini:"parent_profile,omitempty"`
+	ParentProfile   string `ini:"parent_profile,omitempty"` // deprecated
 	IncludeProfile  string `ini:"include_profile,omitempty"`
 	SSOStartURL     string `ini:"sso_start_url,omitempty"`
 	SSORegion       string `ini:"sso_region,omitempty"`
